@@ -1,6 +1,6 @@
 // src/components/InterestsSelection.tsx
 import React, { useEffect, useState } from "react";
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
 interface Interest {
   _id: string;
   name: string;
@@ -18,7 +18,7 @@ export const InterestsSelection = ({
 
   useEffect(() => {
     // Fetch interests from backend
-    fetch("http://localhost:3000/api/interests")
+    fetch(`${API_BASE_URL}/api/interests`)
       .then((res) => res.json())
       .then(setInterests)
       .catch(console.error);

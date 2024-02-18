@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Homepage } from "./components/Homepage";
 import { InterestsSelection } from "./components/InterestsSelection";
 import { ConfirmationPage } from "./components/ConfirmationPage";
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
 const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
@@ -17,7 +17,7 @@ const App: React.FC = () => {
     // For example, you might want to log the selected interests or perform additional actions
     console.log(interests); 
 
-    fetch("http://localhost:3000/api/users", {
+    fetch(`${API_BASE_URL}/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
