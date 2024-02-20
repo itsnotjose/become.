@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Homepage } from "./components/Homepage";
 import { InterestsSelection } from "./components/InterestsSelection";
 import { ConfirmationPage } from "./components/ConfirmationPage";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
+import { Footer } from "./components/Footer";
+import { Nav } from "./components/Nav";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
 const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
@@ -15,7 +18,7 @@ const App: React.FC = () => {
   const handleConfirmSubscription = (interests: string[]) => {
     // Use selectedInterests here if needed, otherwise remove it
     // For example, you might want to log the selected interests or perform additional actions
-    console.log(interests); 
+    console.log(interests);
 
     fetch(`${API_BASE_URL}/api/users`, {
       method: "POST",
@@ -37,16 +40,20 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app">
-      {step === 1 && <Homepage onSubscribe={handleSubscribe} />}
-      {step === 2 && (
-        <InterestsSelection
-          email={email}
-          onConfirmSubscription={handleConfirmSubscription}
-        />
-      )}
-      {step === 3 && <ConfirmationPage />}
-    </div>
+    <>
+      <div className="app">
+        <Nav />
+        {step === 1 && <Homepage onSubscribe={handleSubscribe} />}
+        {step === 2 && (
+          <InterestsSelection
+            email={email}
+            onConfirmSubscription={handleConfirmSubscription}
+          />
+        )}
+        {step === 3 && <ConfirmationPage />}
+        <Footer />
+      </div>
+    </>
   );
 };
 
