@@ -1,7 +1,7 @@
 // src/components/InterestsSelection.tsx
 import React, { useEffect, useState } from "react";
 import LoadingComponent from "./Loader";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
+const API_BASE_URL =  process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
 interface Interest {
   _id: string;
   name: string;
@@ -88,7 +88,6 @@ export const InterestsSelection = ({
               height="24"
             />
           </svg>
-          <span className="relative">The</span>
         </span>{' '}
         Select a Topic
       </h2>

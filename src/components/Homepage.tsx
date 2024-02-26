@@ -1,4 +1,3 @@
-// src/components/Homepage.tsx
 import React, { useState } from "react";
 
 export const Homepage = ({
@@ -7,7 +6,22 @@ export const Homepage = ({
   onSubscribe: (email: string) => void;
 }) => {
   const [email, setEmail] = useState("");
-  
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault(); // Prevent form from submitting
+    if (validateEmail(email)) {
+      setIsEmailValid(true);
+      onSubscribe(email);
+    } else {
+      setIsEmailValid(false);
+    }
+  };
   return (
     
       <div className="mb-16">
@@ -53,21 +67,26 @@ export const Homepage = ({
             </div>
 
             <form className="flex flex-col items-center w-full mb-4 md:flex-row md:px-16">
-              <input
-                placeholder="Email"
-                required={true}
-                type="text"
-                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-black hover:bg-white hover:text-black focus:shadow-outline focus:outline-none"
-                onClick={() => onSubscribe(email)}
-              >
-                Subscribe
-              </button>
-            </form>
+        <input
+          placeholder="Email"
+          required={true}
+          type="text"
+          className={`flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border ${
+            isEmailValid ? "border-gray-300" : "border-red-500"
+          } rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline`}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        {!isEmailValid && (
+          <p className="text-red-500">Please enter a valid email address.</p>
+        )}
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-black hover:bg-white hover:text-black focus:shadow-outline focus:outline-none"
+          onClick={handleSubmit}
+        >
+          Subscribe
+        </button>
+      </form>
           </div>
         </div>
         <div className="relative px-4 sm:px-0">
